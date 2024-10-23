@@ -5,7 +5,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,35 +60,25 @@ class HouseScraper {
         String roomInfo = telShop[0];
         String area, orientation, buildingYear, currentFloor, totalFloors;
 
-        if (roomInfo.equals("独栋")) {
-            area = telShop[1];
-            currentFloor = telShop[2];
-            totalFloors = telShop[3];
-            orientation = telShop[4];
-            buildingYear = (telShop.length > 5) ? telShop[5] : "N/A";
-        } else {
-            area = telShop[1];
-            String floorInfo = telShop[2];
-            orientation = (telShop.length > 3) ? telShop[3] : "N/A";
-            buildingYear = (telShop.length > 4) ? telShop[4] : "N/A";
 
-            if (floorInfo.contains("共")) {
-                String[] floors = floorInfo.split("（共");
-                currentFloor = floors[0].trim();
-                totalFloors = floors[1].replace("层）", "").trim();
-            } else {
-                currentFloor = floorInfo;
-                totalFloors = "N/A";
-            }
-        }
+        area = telShop[1].trim();
+        String floorInfo = telShop[2];
+        orientation = (telShop.length > 3) ? telShop[3] : "N/A";
+        buildingYear = (telShop.length > 4) ? telShop[4] : "N/A";
+
+
+        String[] floors = floorInfo.split("（共");
+        currentFloor = floors[0].trim();
+        totalFloors = floors[1].replace("层）", "").trim();
+
 
         String contact = element.select("span.people_name").text();
         String communityName = element.select("p.add_shop a").text();
         String transportation = element.select("p.clearfix.label span").text();
-        String price = element.select("dd.price_right span").get(0).text().replace("万元", "").trim();
-        String pricePerSqm = element.select("dd.price_right span").get(1).text().replace("元/㎡", "").trim();
+        String price = element.select("dd.price_right span").get(0).text();
+        String pricePerSqm = element.select("dd.price_right span").get(1).text();
 
-        return new House(title, roomInfo, area.replace("㎡", "").trim(), currentFloor, totalFloors,
+        return new House(title, roomInfo, area, currentFloor, totalFloors,
                 orientation, buildingYear, contact, communityName, transportation,
                 price, pricePerSqm);
     }

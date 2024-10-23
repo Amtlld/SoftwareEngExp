@@ -1,21 +1,15 @@
 package org.example;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 // CsvWriter类: 负责将房源信息写入CSV文件
 class CsvWriter {
     private static final List<String> CSV_HEADER_LIST = Arrays.asList(
-            "标题", "房屋属性", "面积/㎡", "所在楼层", "总楼层", "朝向", "建造年份",
-            "联系人", "小区名称", "附近交通", "总价格/万元", "单价/(元/㎡)"
+            "标题", "房屋属性", "面积", "所在楼层", "总楼层", "朝向", "建造年份",
+            "联系人", "小区名称", "附近交通", "总价格", "单价"
     );
     private String filePath;
 
