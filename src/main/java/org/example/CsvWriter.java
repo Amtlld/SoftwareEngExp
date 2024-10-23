@@ -8,8 +8,8 @@ import java.util.List;
 // CsvWriter类: 负责将房源信息写入CSV文件
 class CsvWriter {
     private static final List<String> CSV_HEADER_LIST = Arrays.asList(
-            "标题", "房屋属性", "面积", "所在楼层", "总楼层", "朝向", "建造年份",
-            "联系人", "小区名称", "附近交通", "总价格", "单价"
+            "标题", "房屋属性", "面积/㎡", "所在楼层", "总楼层", "朝向", "建造年份",
+            "联系人", "小区名称", "附近交通", "总价格/万元", "单价/(元/㎡)"
     );
     private String filePath;
 

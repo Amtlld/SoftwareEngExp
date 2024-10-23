@@ -55,16 +55,16 @@ class HouseScraper {
 
     // 解析单个房源信息
     private House parseHouse(Element element) {
-        String title = element.select("span.tit_shop").text();
+        String title = element.select("span.tit_shop").text().trim();
         String[] telShop = element.select("p.tel_shop").text().split("\\|");
-        String roomInfo = telShop[0];
+        String roomInfo = telShop[0].trim();
         String area, orientation, buildingYear, currentFloor, totalFloors;
 
 
-        area = telShop[1].trim();
+        area = telShop[1].replace("㎡","").trim();
         String floorInfo = telShop[2];
-        orientation = (telShop.length > 3) ? telShop[3] : "N/A";
-        buildingYear = (telShop.length > 4) ? telShop[4] : "N/A";
+        orientation = (telShop.length > 3) ? telShop[3].trim() : "N/A";
+        buildingYear = (telShop.length > 4) ? telShop[4].trim() : "N/A";
 
 
         String[] floors = floorInfo.split("（共");
@@ -72,11 +72,11 @@ class HouseScraper {
         totalFloors = floors[1].replace("层）", "").trim();
 
 
-        String contact = element.select("span.people_name").text();
-        String communityName = element.select("p.add_shop a").text();
-        String transportation = element.select("p.clearfix.label span").text();
-        String price = element.select("dd.price_right span").get(0).text();
-        String pricePerSqm = element.select("dd.price_right span").get(1).text();
+        String contact = element.select("span.people_name").text().trim();
+        String communityName = element.select("p.add_shop a").text().trim();
+        String transportation = element.select("p.clearfix.label span").text().trim();
+        String price = element.select("dd.price_right span").get(0).text().replace("万","").trim();
+        String pricePerSqm = element.select("dd.price_right span").get(1).text().replace("元/㎡","").trim();
 
         return new House(title, roomInfo, area, currentFloor, totalFloors,
                 orientation, buildingYear, contact, communityName, transportation,
