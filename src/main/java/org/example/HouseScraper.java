@@ -61,15 +61,27 @@ class HouseScraper {
         String area, orientation, buildingYear, currentFloor, totalFloors;
 
 
-        area = telShop[1].replace("㎡","").trim();
-        String floorInfo = telShop[2];
-        orientation = (telShop.length > 3) ? telShop[3].trim() : "N/A";
-        buildingYear = (telShop.length > 4) ? telShop[4].trim() : "N/A";
+        if (roomInfo.equals("独栋")) {
+            area = telShop[1].replace("㎡","").trim();
+            currentFloor = telShop[2].trim();
+            totalFloors = telShop[3].trim();
+            orientation = telShop[4].trim();
+            buildingYear = (telShop.length > 5) ? telShop[5].trim() : "N/A";
+        } else {
+            area = telShop[1].replace("㎡","").trim();
+            String floorInfo = telShop[2];
+            orientation = (telShop.length > 3) ? telShop[3].trim() : "N/A";
+            buildingYear = (telShop.length > 4) ? telShop[4].trim() : "N/A";
 
-
-        String[] floors = floorInfo.split("（共");
-        currentFloor = floors[0].trim();
-        totalFloors = floors[1].replace("层）", "").trim();
+            if (floorInfo.contains("共")) {
+                String[] floors = floorInfo.split("（共");
+                currentFloor = floors[0].trim();
+                totalFloors = floors[1].replace("层）", "").trim();
+            } else {
+                currentFloor = floorInfo;
+                totalFloors = "N/A";
+            }
+        }
 
 
         String contact = element.select("span.people_name").text().trim();
